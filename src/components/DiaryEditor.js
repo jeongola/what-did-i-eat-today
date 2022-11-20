@@ -16,7 +16,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
   const [exercise, setExercise] = useState(3);
   const [date, setDate] = useState(getStrDate(new Date()));
 
-  const { onCreate, onEdit } = useContext(DiaryDispatchContext);
+  const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
   const handleClickExercise = (exercise) => {
     setExercise(exercise);
@@ -28,9 +28,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
       contentRef.current.focus();
       return;
     }
-    if (
-      window.confirm(isEdit ? 'Do you really want to edit this page?' : 'What did I eat today?')
-    ) {
+    if (window.confirm(isEdit ? 'Do you really want to edit this page?' : 'Are you done?')) {
       if (!isEdit) {
         onCreate(date, content, exercise);
       } else {
@@ -38,6 +36,13 @@ const DiaryEditor = ({ isEdit, originData }) => {
       }
     }
     navigate('/', { replace: true });
+  };
+
+  const handleRemove = () => {
+    if (window.confirm('Do you really want to delete this page?')) {
+      onRemove(originData.id);
+      navigate('/', { replace: true });
+    }
   };
 
   useEffect(() => {
@@ -53,6 +58,7 @@ const DiaryEditor = ({ isEdit, originData }) => {
       <MyHeader
         headText={isEdit ? 'Edit' : 'What did I eat today?'}
         leftChild={<MyButton text={'< go back'} onClick={() => navigate(-1)} />}
+        rightChild={isEdit && <MyButton text={'delete'} type={'negative'} onClick={handleRemove} />}
       />
       <div>
         <section>
