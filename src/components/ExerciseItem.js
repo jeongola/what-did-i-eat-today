@@ -1,3 +1,5 @@
+import React from 'react';
+
 const ExerciseItem = ({ isselected, onClick, exercise_id, exercise_descript, exercise_img }) => {
   return (
     <div
@@ -12,4 +14,4 @@ const ExerciseItem = ({ isselected, onClick, exercise_id, exercise_descript, exe
   );
 };
 
-export default ExerciseItem;
+export default React.memo(ExerciseItem);

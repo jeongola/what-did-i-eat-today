@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useRef, useContext, useEffect } from 'react';
+import { useState, useRef, useContext, useEffect, useCallback } from 'react';
 import MyHeader from './MyHeader';
 import MyButton from './MyButton';
 import ExerciseItem from './ExerciseItem';
@@ -18,9 +18,9 @@ const DiaryEditor = ({ isEdit, originData }) => {
 
   const { onCreate, onEdit, onRemove } = useContext(DiaryDispatchContext);
 
-  const handleClickExercise = (exercise) => {
+  const handleClickExercise = useCallback((exercise) => {
     setExercise(exercise);
-  };
+  }, []);
   const navigate = useNavigate();
 
   const handleSubmit = () => {
